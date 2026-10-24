@@ -38,6 +38,7 @@ cd src/
 git clone https://github.com/Shirish2004/Open-Pika.git
 cd open_pika
 /usr/bin/python -m pip install -r requirements.txt   # lerobot is the big one
+cd ../..
 colcon build --packages-select open_pika && source install/setup.bash
 ```
 
