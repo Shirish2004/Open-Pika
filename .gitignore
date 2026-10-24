@@ -1,0 +1,10 @@
+open_pika.egg-info/
+__pycache__/
+*.pyc
+build/
+install/
+log/
+.pytest_cache/
+!config/default.yaml
+examples/**/*.png
+tmp/

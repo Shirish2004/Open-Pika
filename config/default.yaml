@@ -1,0 +1,52 @@
+# open_pika default configuration.
+# Copy this into ~/.config/open_pika/config.yaml and edit — CLI flags override
+# everything below, so the file is just the "usual machine" answer.
+
+backend: sdk          # sdk | ros | mock
+control_hz: 50        # teleop loop: how often tracker -> arm commands flow
+
+sense:
+  port: /dev/ttyUSB0
+  tracker_device: WM0        # as reported by pysurvive, shown on start
+  fisheye_index: 0
+  realsense_serial: "315122272216"   # empty string = first available D405
+  stabilise_secs: 3.0        # let pysurvive converge before locking base pose
+
+gripper:
+  port: /dev/ttyUSB2
+  fisheye_index: 2
+  realsense_serial: "315122272755"
+
+arm:
+  can_port: can0
+  move_spd_rate: 30          # % of max speed, lower = gentler
+  always_on_teleop: true     # arm tracks as soon as a valid pose arrives
+
+# ROS backend settings — topics expected/published when backend: ros
+ros:
+  arm_name: left             # piper_ros piper_name suffix (used in topics)
+  tracker_topic: ""          # geometry_msgs/PoseStamped; empty = no tracker
+  imu_topic: /imu/data       # sensor_tools IMU, or empty to ignore
+  image_topics: []           # e.g. [/camera1/color, /camera2/color/compressed]
+
+camera:
+  width: 640
+  height: 480
+  fps: 30
+
+mapping:
+  # fixed transform between the tracker frame and the piper end effector frame
+  # [x, y, z, roll, pitch, yaw] — metres/radians.
+  pika_to_arm: [0.0, 0.0, 0.0, 0.0, 1.5707963267948966, 0.0]
+  deadzone_m: 0.001          # jitters smaller than this don't move the arm
+
+recording:
+  fps: 30                    # dataset rate — independent of control_hz
+  record_pose: true
+  record_imu: true
+  video:                     # passed to lerobot's video encoder
+    codec: libsvtav1
+    pix_fmt: yuv420p
+    g: 2
+    crf: 30
+  images_buffered: false
