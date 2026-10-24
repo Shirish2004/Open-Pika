@@ -33,6 +33,8 @@ Screenshots of a session and hardware notes live in `docs/`.
 
 ```bash
 # ROS 2 Humble is expected for the ros backend; the sdk backend needs none.
+mkdir -p pika_ws/src
+cd src/
 git clone https://github.com/Shirish2004/Open-Pika.git
 cd open_pika
 /usr/bin/python -m pip install -r requirements.txt   # lerobot is the big one
